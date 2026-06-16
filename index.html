@@ -2777,41 +2777,53 @@ async function pttBarJoin() {
     if (el) { el.textContent = 'Joining...'; el.disabled = true; }
   });
   pttBarSetStatus('Connecting...', '#f59e0b');
-  pttBarSetSub('Getting microphone...');
+
+  // Always reset buttons after 3 seconds no matter what
+  var safetyReset = setTimeout(function() {
+    ['pttSheetJoinBtn','wtJoinBtn'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) { el.textContent = 'Join Room'; el.disabled = false; }
+    });
+  }, 3000);
 
   try {
+    pttBarSetSub('Getting microphone...');
     pttStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
     pttStream.getAudioTracks().forEach(function(t) { t.enabled = false; });
 
     pttBarSetSub('Joining room...');
-
-    // Try to post — if it fails, still let user in but show warning
     var joinOk = await pttPost(code, pttPeerId, 'join', {});
-    console.log('Join post result:', joinOk);
+    clearTimeout(safetyReset);
 
     if (!joinOk) {
-      // Show setup guide but ALSO reset button so user isn't stuck
       ['pttSheetJoinBtn','wtJoinBtn'].forEach(function(id) {
         var el = document.getElementById(id);
         if (el) { el.textContent = 'Join Room'; el.disabled = false; }
       });
-      pttShowSetupGuide();
       pttBarSetStatus('Disconnected', null);
       pttBarSetSub('Tap Connect to start');
+      pttShowSetupGuide();
       return;
     }
 
-    // Start polling every 1.5s
+    // Success — start polling and show connected UI
     pttPollTimer = setInterval(function() { pttPoll(code, pttPeerId); }, 1500);
     pttOnJoined(code);
 
   } catch(err) {
+    clearTimeout(safetyReset);
+    ['pttSheetJoinBtn','wtJoinBtn'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) { el.textContent = 'Join Room'; el.disabled = false; }
+    });
     console.error('PTT join error:', err);
     if (err.name === 'NotAllowedError') {
-      pttShowErr('Microphone access denied. Please allow mic access and try again.');
+      pttShowErr('Microphone access denied. Allow mic access and try again.');
     } else {
       pttShowErr(err.message || 'Could not connect. Try again.');
     }
+    pttBarSetStatus('Disconnected', null);
+    pttBarSetSub('Tap Connect to start');
   }
 }
 
