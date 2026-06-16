@@ -2588,6 +2588,60 @@ var PTT_ICE = [
   { urls: 'turn:openrelay.metered.ca:443?transport=tcp', username: 'openrelayproject', credential: 'openrelayproject' }
 ];
 
+async function pttTestConnection() {
+  var el = document.getElementById('pttTestResult');
+  el.style.display = 'block';
+  el.style.background = 'rgba(232,160,0,.08)';
+  el.style.border = '1px solid rgba(232,160,0,.2)';
+  el.style.color = '#e8c57a';
+  el.textContent = 'Testing...';
+
+  try {
+    // Test 1: Firebase write
+    var writeRes = await fetch(FB_URL + '/apex_test.json', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ts: Date.now() })
+    });
+    if (!writeRes.ok) {
+      var txt = await writeRes.text();
+      el.style.background = 'rgba(239,68,68,.08)';
+      el.style.border = '1px solid rgba(239,68,68,.2)';
+      el.style.color = '#f87171';
+      el.innerHTML = '&#10060; Firebase write failed (' + writeRes.status + ')<br>' + txt + '<br><br>Make sure Firebase rules are set to allow read/write.';
+      return;
+    }
+
+    // Test 2: Firebase read
+    var readRes = await fetch(FB_URL + '/apex_test.json');
+    if (!readRes.ok) {
+      el.style.color = '#f87171';
+      el.textContent = '&#10060; Firebase read failed (' + readRes.status + ')';
+      return;
+    }
+
+    // Test 3: Mic
+    try {
+      var stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      stream.getTracks().forEach(function(t){ t.stop(); });
+      el.style.background = 'rgba(29,185,84,.08)';
+      el.style.border = '1px solid rgba(29,185,84,.2)';
+      el.style.color = '#1DB954';
+      el.innerHTML = '&#10004; Firebase connected!<br>&#10004; Microphone works!<br><br>You are ready to join a room.';
+    } catch(me) {
+      el.style.background = 'rgba(239,68,68,.08)';
+      el.style.color = '#f87171';
+      el.innerHTML = '&#10004; Firebase connected!<br>&#10060; Microphone blocked: ' + me.message;
+    }
+
+  } catch(e) {
+    el.style.background = 'rgba(239,68,68,.08)';
+    el.style.border = '1px solid rgba(239,68,68,.2)';
+    el.style.color = '#f87171';
+    el.innerHTML = '&#10060; Could not reach Firebase.<br>' + e.message + '<br><br>Check your internet connection.';
+  }
+}
+
 function pttGetCode() {
   var v1 = (document.getElementById('pttSheetUrl') || {}).value || '';
   var v2 = (document.getElementById('wtRoomUrl')   || {}).value || '';
@@ -3014,6 +3068,8 @@ function pttBarStopSig() {
   <div class="sheet-handle"></div>
   <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.06em;margin-bottom:4px">Partner Voice Chat</div>
   <div style="font-size:.8rem;color:var(--muted);margin-bottom:16px;line-height:1.6">Pick any room code — share it with your partner by text. Both type the same code and you're live. No accounts, no downloads.</div>
+    <button onclick="pttTestConnection()" class="btn btn-ghost btn-sm" style="width:100%;margin-bottom:10px;font-size:.75rem">&#128268; Test Connection First</button>
+    <div id="pttTestResult" style="display:none;font-size:.75rem;padding:8px 12px;border-radius:6px;margin-bottom:10px;line-height:1.6"></div>
 
   <div class="field" style="margin-bottom:10px">
     <label>Room Code</label>
