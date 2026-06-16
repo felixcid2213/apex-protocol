@@ -2563,84 +2563,14 @@ function renderSwap(panel, alt, originalName, muscle, panelId) {
 
 
 // ═══════════════════════════════════════════════════
-// PARTNER VOICE CHAT — WebRTC + Firebase signaling
-// Uses Firebase Realtime DB (free, no setup needed)
+// PARTNER VOICE CHAT — Daily.co embedded room
 // ═══════════════════════════════════════════════════
-var FB_URL = 'https://gif-battle-95ac1-default-rtdb.firebaseio.com';
-
-var pttPc        = null;
-var pttStream    = null;
-var pttRoomCode  = null;
-var pttPeerId    = null;
-var pttConnected = false;
-var pttPolling   = null;
-var pttIsHost    = false;
-var wtMicOn      = false;
-var wtMicLocked  = false;
+var pttDailyFrame = null;
+var wtMicOn       = false;
+var wtMicLocked   = false;
 var pttBarSigInterval = null;
 var peerConnections   = {};
-
-var PTT_ICE = [
-  { urls: 'stun:stun.l.google.com:19302' },
-  { urls: 'stun:stun1.l.google.com:19302' },
-  { urls: 'turn:openrelay.metered.ca:80',  username: 'openrelayproject', credential: 'openrelayproject' },
-  { urls: 'turn:openrelay.metered.ca:443', username: 'openrelayproject', credential: 'openrelayproject' },
-  { urls: 'turn:openrelay.metered.ca:443?transport=tcp', username: 'openrelayproject', credential: 'openrelayproject' }
-];
-
-async function pttTestConnection() {
-  var el = document.getElementById('pttTestResult');
-  el.style.display = 'block';
-  el.style.background = 'rgba(232,160,0,.08)';
-  el.style.border = '1px solid rgba(232,160,0,.2)';
-  el.style.color = '#e8c57a';
-  el.textContent = 'Testing...';
-
-  try {
-    // Test 1: Firebase write
-    var writeRes = await fetch(FB_URL + '/apex_test.json', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ts: Date.now() })
-    });
-    if (!writeRes.ok) {
-      var txt = await writeRes.text();
-      el.style.background = 'rgba(239,68,68,.08)';
-      el.style.border = '1px solid rgba(239,68,68,.2)';
-      el.style.color = '#f87171';
-      el.innerHTML = '&#10060; Firebase write failed (' + writeRes.status + ')<br>' + txt + '<br><br>Make sure Firebase rules are set to allow read/write.';
-      return;
-    }
-
-    // Test 2: Firebase read
-    var readRes = await fetch(FB_URL + '/apex_test.json');
-    if (!readRes.ok) {
-      el.style.color = '#f87171';
-      el.textContent = '&#10060; Firebase read failed (' + readRes.status + ')';
-      return;
-    }
-
-    // Test 3: Mic
-    try {
-      var stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      stream.getTracks().forEach(function(t){ t.stop(); });
-      el.style.background = 'rgba(29,185,84,.08)';
-      el.style.border = '1px solid rgba(29,185,84,.2)';
-      el.style.color = '#1DB954';
-      el.innerHTML = '&#10004; Firebase connected!<br>&#10004; Microphone works!<br><br>You are ready to join a room.';
-    } catch(me) {
-      el.style.background = 'rgba(239,68,68,.08)';
-      el.style.color = '#f87171';
-      el.innerHTML = '&#10004; Firebase connected!<br>&#10060; Microphone blocked: ' + me.message;
-    }
-
-  } catch(e) {
-    el.style.background = 'rgba(239,68,68,.08)';
-    el.style.border = '1px solid rgba(239,68,68,.2)';
-    el.style.color = '#f87171';
-    el.innerHTML = '&#10060; Could not reach Firebase.<br>' + e.message + '<br><br>Check your internet connection.';
-  }
-}
+var pttRoomCode   = null;
 
 function pttGetCode() {
   var v1 = (document.getElementById('pttSheetUrl') || {}).value || '';
@@ -2696,33 +2626,6 @@ function pttShowErr(msg) {
   pttBarSetSub('Tap Connect to start');
 }
 
-// ── Firebase REST signaling ───────────────────────
-async function fbWrite(path, data) {
-  try {
-    var r = await fetch(FB_URL + path + '.json', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    return r.ok;
-  } catch(e) { return false; }
-}
-
-async function fbRead(path) {
-  try {
-    var r = await fetch(FB_URL + path + '.json');
-    if (!r.ok) return null;
-    return await r.json();
-  } catch(e) { return null; }
-}
-
-async function fbDelete(path) {
-  try {
-    await fetch(FB_URL + path + '.json', { method: 'DELETE' });
-  } catch(e) {}
-}
-
-// ── Join room ─────────────────────────────────────
 async function pttBarJoin() {
   var code = pttGetCode();
   ['pttSheetErr','wtError'].forEach(function(id) {
@@ -2739,143 +2642,72 @@ async function pttBarJoin() {
     if (el) { el.textContent = 'Joining...'; el.disabled = true; }
   });
   pttBarSetStatus('Connecting...', '#f59e0b');
+  pttBarSetSub('Connecting...');
 
-  // Safety reset — never stay stuck
-  var safetyTimer = setTimeout(function() {
-    pttResetBtn();
-    pttBarSetStatus('Disconnected', null);
-    pttBarSetSub('Tap Connect to start');
-    pttShowErr('Connection timed out. Check your internet and try again.');
-  }, 8000);
+  // Use Daily.co public rooms — room name = code, audio only
+  // Daily free rooms are public and created on first join
+  var roomUrl = 'https://felixcid2213.daily.co/' + code.toLowerCase();
 
   try {
-    pttBarSetSub('Getting microphone...');
-    pttStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-    pttStream.getAudioTracks().forEach(function(t) { t.enabled = false; });
-
-    pttBarSetSub('Connecting...');
-    pttPeerId = Date.now().toString(36);
-
-    // Check if room exists (someone is already hosting)
-    var room = await fbRead('/rooms/' + code);
-
-    if (!room || !room.offer) {
-      // We are HOST — create offer
-      pttIsHost = true;
-      await pttCreatePc();
-      var offer = await pttPc.createOffer();
-      await pttPc.setLocalDescription(offer);
-      await fbWrite('/rooms/' + code + '/offer', { sdp: JSON.stringify(offer) });
-      pttBarSetSub('Waiting for partner...');
-
-      // Poll for answer
-      var pollCount = 0;
-      pttPolling = setInterval(async function() {
-        pollCount++;
-        if (pollCount > 60) { // 60 seconds timeout
-          clearInterval(pttPolling);
-          pttShowErr('No partner joined. Try again.');
-          pttBarLeave();
-          return;
-        }
-        var r = await fbRead('/rooms/' + code + '/answer');
-        if (r && r.sdp) {
-          clearInterval(pttPolling);
-          var answer = JSON.parse(r.sdp);
-          await pttPc.setRemoteDescription(new RTCSessionDescription(answer));
-          pttPollCandidates(code, 'guestCandidates');
-        }
-      }, 1000);
-
-    } else {
-      // We are GUEST — answer the offer
-      pttIsHost = false;
-      await pttCreatePc();
-      var offerSdp = JSON.parse(room.offer.sdp);
-      await pttPc.setRemoteDescription(new RTCSessionDescription(offerSdp));
-      var answer = await pttPc.createAnswer();
-      await pttPc.setLocalDescription(answer);
-      await fbWrite('/rooms/' + code + '/answer', { sdp: JSON.stringify(answer) });
-      pttPollCandidates(code, 'hostCandidates');
+    // Load Daily.co script
+    if (!window.DailyIframe) {
+      await new Promise(function(resolve, reject) {
+        var s = document.createElement('script');
+        s.src = 'https://unpkg.com/@daily-co/daily-js';
+        s.onload = resolve;
+        s.onerror = function() { reject(new Error('Could not load Daily.co')); };
+        document.head.appendChild(s);
+        setTimeout(function() { reject(new Error('Load timed out')); }, 8000);
+      });
     }
 
-    clearTimeout(safetyTimer);
-    pttOnJoined(code);
+    // Create Daily call object — audio only, no video
+    pttDailyFrame = window.DailyIframe.createCallObject({
+      audioSource: true,
+      videoSource: false
+    });
+
+    pttDailyFrame.on('joined-meeting', function() {
+      // Mute mic by default — PTT style
+      pttDailyFrame.setLocalAudio(false);
+      pttOnJoined(code);
+      pttBarSetSub('Waiting for partner...');
+    });
+
+    pttDailyFrame.on('participant-joined', function(e) {
+      if (!e.participant.local) {
+        peerConnections['partner'] = { active: true };
+        pttBarSetSub('Partner connected · Hold mic to talk');
+        pttRenderPeers();
+        pttBarStartSig();
+        setTimeout(pttBarStopSig, 1000);
+      }
+    });
+
+    pttDailyFrame.on('participant-left', function(e) {
+      if (!e.participant.local) {
+        delete peerConnections['partner'];
+        pttRenderPeers();
+        pttBarSetSub('Partner left · Waiting...');
+      }
+    });
+
+    pttDailyFrame.on('left-meeting', function() {
+      pttCleanup();
+    });
+
+    pttDailyFrame.on('error', function(e) {
+      console.error('Daily error:', e);
+      pttShowErr('Connection error: ' + (e.errorMsg || 'Try again'));
+      pttCleanup();
+    });
+
+    await pttDailyFrame.join({ url: roomUrl, audioSource: true, videoSource: false });
 
   } catch(err) {
-    clearTimeout(safetyTimer);
-    pttResetBtn();
-    console.error('PTT error:', err);
-    if (err.name === 'NotAllowedError') {
-      pttShowErr('Microphone access denied. Please allow mic access and try again.');
-    } else {
-      pttShowErr('Could not connect: ' + (err.message || 'Unknown error'));
-    }
+    console.error('PTT join error:', err);
+    pttShowErr(err.message || 'Could not connect. Try again.');
   }
-}
-
-function pttPollCandidates(code, fromKey) {
-  var seen = {};
-  var myKey = pttIsHost ? 'hostCandidates' : 'guestCandidates';
-
-  // Send our ICE candidates as they arrive
-  if (pttPc) {
-    pttPc.onicecandidate = async function(e) {
-      if (e.candidate) {
-        var key = '/rooms/' + code + '/' + myKey + '/' + Date.now();
-        await fbWrite(key, { candidate: JSON.stringify(e.candidate) });
-      }
-    };
-  }
-
-  // Poll for their ICE candidates
-  var candTimer = setInterval(async function() {
-    if (!pttPc || pttPc.connectionState === 'connected') {
-      clearInterval(candTimer); return;
-    }
-    var candidates = await fbRead('/rooms/' + code + '/' + fromKey);
-    if (!candidates) return;
-    for (var k in candidates) {
-      if (seen[k]) continue;
-      seen[k] = true;
-      try {
-        var cand = JSON.parse(candidates[k].candidate);
-        await pttPc.addIceCandidate(new RTCIceCandidate(cand));
-      } catch(e) {}
-    }
-  }, 500);
-}
-
-async function pttCreatePc() {
-  pttPc = new RTCPeerConnection({ iceServers: PTT_ICE });
-  pttStream.getTracks().forEach(function(t) { pttPc.addTrack(t, pttStream); });
-
-  pttPc.ontrack = function(e) {
-    var old = document.getElementById('pttRemoteAudio'); if (old) old.remove();
-    var audio = document.createElement('audio');
-    audio.id = 'pttRemoteAudio'; audio.srcObject = e.streams[0];
-    audio.autoplay = true; audio.style.display = 'none';
-    document.body.appendChild(audio);
-    pttConnected = true;
-    peerConnections['partner'] = { active: true };
-    pttRenderPeers();
-    pttBarSetSub('Partner connected · Hold mic to talk');
-  };
-
-  pttPc.onconnectionstatechange = function() {
-    var s = pttPc.connectionState;
-    if (s === 'connected') {
-      pttConnected = true;
-      peerConnections['partner'] = { active: true };
-      pttRenderPeers();
-      pttBarSetSub('Partner connected · Hold mic to talk');
-    } else if (s === 'disconnected' || s === 'failed') {
-      pttConnected = false;
-      peerConnections = {};
-      pttRenderPeers();
-      pttBarSetSub('Partner disconnected');
-    }
-  };
 }
 
 function pttOnJoined(code) {
@@ -2889,13 +2721,14 @@ function pttOnJoined(code) {
 }
 
 function pttRenderPeers() {
+  var connected = !!peerConnections['partner'];
   function build() {
     var f = document.createDocumentFragment();
     var y = document.createElement('div');
     y.textContent = 'You';
     y.setAttribute('style','display:inline-flex;align-items:center;padding:6px 12px;border-radius:20px;background:var(--surface2);border:1px solid var(--accent);font-weight:700;font-size:.82rem;color:var(--accent);margin-right:6px');
     f.appendChild(y);
-    if (pttConnected) {
+    if (connected) {
       var p = document.createElement('div');
       p.textContent = 'Partner';
       p.setAttribute('style','display:inline-flex;align-items:center;padding:6px 12px;border-radius:20px;background:var(--surface2);border:1px solid #1DB954;font-weight:700;font-size:.82rem;color:#1DB954');
@@ -2913,10 +2746,10 @@ function pttRenderPeers() {
 }
 
 function pttBarStart() {
-  if (!pttRoomCode) { pttBarToggleSheet(); return; }
+  if (!pttDailyFrame) { pttBarToggleSheet(); return; }
   if (wtMicLocked) return;
   wtMicOn = true;
-  if (pttStream) pttStream.getAudioTracks().forEach(function(t) { t.enabled = true; });
+  pttDailyFrame.setLocalAudio(true);
   var b = document.getElementById('pttBarBtn'); if (b) b.classList.add('transmitting');
   document.getElementById('pttBar').classList.add('transmitting');
   pttBarSetSub('Transmitting...');
@@ -2926,21 +2759,19 @@ function pttBarStart() {
 function pttBarStop() {
   if (wtMicLocked || !wtMicOn) return;
   wtMicOn = false;
-  if (pttStream) pttStream.getAudioTracks().forEach(function(t) { t.enabled = false; });
+  if (pttDailyFrame) pttDailyFrame.setLocalAudio(false);
   var b = document.getElementById('pttBarBtn'); if (b) b.classList.remove('transmitting');
   document.getElementById('pttBar').classList.remove('transmitting');
-  pttBarSetSub(pttConnected ? 'Partner connected · Hold mic to talk' : 'Waiting for partner...');
+  pttBarSetSub(peerConnections['partner'] ? 'Partner connected · Hold mic to talk' : 'Waiting for partner...');
   pttBarStopSig();
 }
 
-function pttBarLeave() {
-  if (pttRoomCode) fbDelete('/rooms/' + pttRoomCode);
-  if (pttPolling)  { clearInterval(pttPolling); pttPolling = null; }
-  if (pttStream)   { pttStream.getTracks().forEach(function(t){ t.stop(); }); pttStream = null; }
-  if (pttPc)       { try { pttPc.close(); } catch(e){} pttPc = null; }
-  var ra = document.getElementById('pttRemoteAudio'); if (ra) ra.remove();
-  pttConnected=false; peerConnections={}; pttRoomCode=null; pttPeerId=null; pttIsHost=false;
-  wtMicOn=false; wtMicLocked=false;
+function pttCleanup() {
+  peerConnections = {};
+  pttRoomCode = null;
+  wtMicOn = false;
+  wtMicLocked = false;
+  pttDailyFrame = null;
   pttBarStopSig();
   pttBarSetStatus('Disconnected', null);
   pttBarSetSub('Tap Connect to start');
@@ -2954,16 +2785,24 @@ function pttBarLeave() {
   var blb = document.getElementById('pttBarLockBtn');
   if (lb)  { lb.textContent='Lock Mic On'; lb.style.background='var(--surface2)'; lb.style.color='var(--text)'; lb.style.borderColor='var(--border2)'; }
   if (blb) { blb.textContent='LOCK'; blb.style.color='var(--muted)'; }
+  pttResetBtn();
+}
+
+async function pttBarLeave() {
+  if (pttDailyFrame) {
+    try { await pttDailyFrame.leave(); await pttDailyFrame.destroy(); } catch(e){}
+  }
+  pttCleanup();
 }
 
 function pttBarToggleLock() {
-  if (!pttRoomCode) { pttBarToggleSheet(); return; }
+  if (!pttDailyFrame) { pttBarToggleSheet(); return; }
   wtMicLocked = !wtMicLocked;
   var lb  = document.getElementById('pttLockBtn');
   var blb = document.getElementById('pttBarLockBtn');
   if (wtMicLocked) {
     wtMicOn = true;
-    if (pttStream) pttStream.getAudioTracks().forEach(function(t){ t.enabled=true; });
+    if (pttDailyFrame) pttDailyFrame.setLocalAudio(true);
     var b = document.getElementById('pttBarBtn'); if (b) b.classList.add('transmitting');
     document.getElementById('pttBar').classList.add('transmitting');
     pttBarSetSub('Mic locked ON'); pttBarStartSig();
@@ -2971,10 +2810,10 @@ function pttBarToggleLock() {
     if (blb) { blb.textContent='ON'; blb.style.color='#ef4444'; }
   } else {
     wtMicOn = false;
-    if (pttStream) pttStream.getAudioTracks().forEach(function(t){ t.enabled=false; });
+    if (pttDailyFrame) pttDailyFrame.setLocalAudio(false);
     var b = document.getElementById('pttBarBtn'); if (b) b.classList.remove('transmitting');
     document.getElementById('pttBar').classList.remove('transmitting');
-    pttBarSetSub(pttConnected ? 'Partner connected · Hold mic to talk' : 'Waiting for partner...');
+    pttBarSetSub(peerConnections['partner'] ? 'Partner connected · Hold mic to talk' : 'Waiting for partner...');
     pttBarStopSig();
     if (lb)  { lb.textContent='Lock Mic On'; lb.style.background='var(--surface2)'; lb.style.color='var(--text)'; lb.style.borderColor='var(--border2)'; }
     if (blb) { blb.textContent='LOCK'; blb.style.color='var(--muted)'; }
