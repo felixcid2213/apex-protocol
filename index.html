@@ -1642,11 +1642,11 @@ function deleteBodyEntry(ts) { bodyLog=bodyLog.filter(e=>e.ts!==ts); save(); ren
 function renderBodySummary() {
   if (!bodyLog.length) return;
   const l = bodyLog[bodyLog.length-1];
-  document.getElementById('sbWeight').textContent = l.weight??'—';
-  document.getElementById('sbChest').textContent = l.chest??'—';
-  const arm = l.lArm&&l.rArm ? ((l.lArm+l.rArm)/2).toFixed(2) : (l.lArm??l.rArm??'—');
+  document.getElementById('sbWeight').textContent = (l.weight==null?'—':l.weight);
+  document.getElementById('sbChest').textContent = (l.chest==null?'—':l.chest);
+  const arm = l.lArm&&l.rArm ? ((l.lArm+l.rArm)/2).toFixed(2) : (l.lArm!=null?l.lArm:(l.rArm!=null?l.rArm:'—'));
   document.getElementById('sbArm').textContent = arm;
-  document.getElementById('sbWaist').textContent = l.waist??'—';
+  document.getElementById('sbWaist').textContent = (l.waist==null?'—':l.waist);
 }
 
 function renderBodyHistory() {
