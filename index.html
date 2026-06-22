@@ -2398,6 +2398,12 @@ var SWAP_DB = {
     { name:'Preacher Curl', equipment:'Preacher Bench, Barbell', difficulty:'Intermediate', steps:['Set up at preacher bench, arms draped over the pad','Grip barbell shoulder-width with underhand grip','Curl bar up until forearms are vertical','Lower slowly — do not let elbows fully lock out at bottom'], tip:'Go slow on the way down — the negative is where most muscle damage occurs.', ytSearch:'preacher curl form tutorial' },
     { name:'Cable Curl', equipment:'Cable Machine', difficulty:'Beginner', steps:['Attach straight bar to low pulley','Stand upright, grip bar with underhand grip shoulder-width','Curl bar toward chin, keeping elbows at sides','Squeeze at top, lower under control'], tip:'Cable keeps constant tension throughout the entire range of motion.', ytSearch:'cable curl bicep tutorial' },
     { name:'Incline Dumbbell Curl', equipment:'Dumbbells, Incline Bench', difficulty:'Intermediate', steps:['Set bench to 45-60 degree incline, sit back against it','Let arms hang straight at sides fully extended','Curl both dumbbells up, keeping shoulders back','Lower fully back down for maximum stretch'], tip:'The incline position gives your biceps a deep stretch at the bottom.', ytSearch:'incline dumbbell curl bicep tutorial' },
+    { name:'Bayesian Cable Curl', equipment:'Cable Machine', difficulty:'Intermediate', steps:['Set pulley to low, face away from the machine, single handle','Step forward so the cable pulls your arm slightly behind you','Curl the handle up without letting the elbow drift forward','Lower until you feel a deep stretch behind the body'], tip:'Standing in front of the pulley loads the stretched position — great for growth.', ytSearch:'bayesian cable curl tutorial' },
+    { name:'EZ-Bar Curl', equipment:'EZ Curl Bar', difficulty:'Beginner', steps:['Stand holding EZ bar on the angled inner grips','Keep elbows pinned to your sides','Curl the bar up to shoulder height, squeeze','Lower under control to full extension'], tip:'The angled grip is far easier on the wrists than a straight bar.', ytSearch:'ez bar curl proper form' },
+    { name:'Chin-Up', equipment:'Pull-Up Bar', difficulty:'Intermediate', steps:['Hang from bar with underhand grip, hands shoulder-width','Pull your chest toward the bar, driving elbows down','Get your chin over the bar, squeeze biceps','Lower slowly to a full dead hang'], tip:'Supinated grip makes this one of the best mass builders for biceps.', ytSearch:'chin up bicep tutorial' },
+    { name:'Drag Curl', equipment:'Barbell or Dumbbells', difficulty:'Intermediate', steps:['Stand holding the bar against your thighs','Curl by dragging the bar straight up along your torso','Pull elbows back behind you as the bar rises','Lower along the same path under control'], tip:'Dragging the weight up shifts tension onto the long head of the biceps.', ytSearch:'drag curl barbell tutorial' },
+    { name:'Zottman Curl', equipment:'Dumbbells', difficulty:'Intermediate', steps:['Curl dumbbells up with a normal underhand grip','At the top, rotate wrists so palms face down','Lower the weights with the overhand (pronated) grip','Rotate back to underhand at the bottom and repeat'], tip:'Trains biceps on the way up and forearms on the way down in one rep.', ytSearch:'zottman curl tutorial' },
+    { name:'Resistance Band Curl', equipment:'Resistance Band', difficulty:'Beginner', steps:['Stand on center of band, feet shoulder-width','Grip handles underhand, arms fully extended','Curl both hands up toward shoulders','Slowly lower back to full extension'], tip:'Great when no weights are available — go slow to maximize tension.', ytSearch:'resistance band bicep curl tutorial' }
   ],
   'Chest': [
     { name:'Cable Fly', equipment:'Cable Machine', difficulty:'Beginner', steps:['Set both pulleys to high position, stand in center','Grab handles with slight bend in elbows','Bring hands together in a hugging motion in front of chest','Slowly open back out to stretch, then repeat'], tip:'Think about squeezing a pencil between your pecs at the peak.', ytSearch:'cable chest fly proper form tutorial' },
@@ -2405,41 +2411,86 @@ var SWAP_DB = {
     { name:'Decline Push-Up', equipment:'Bodyweight, Elevated Surface', difficulty:'Intermediate', steps:['Place feet on elevated surface, hands on floor shoulder-width','Body forms a straight line from head to heels','Lower chest toward floor keeping elbows 45 degrees','Push back up to start without flaring elbows'], tip:'Elevation shifts emphasis to upper chest fibers.', ytSearch:'decline push up upper chest tutorial' },
     { name:'Pec Deck Machine', equipment:'Pec Deck Machine', difficulty:'Beginner', steps:['Sit upright, back flat against pad','Grip handles at shoulder height, elbows slightly bent','Squeeze arms together in front of chest','Open slowly back to stretch position'], tip:'Perfect for isolating chest without worrying about stabilizers.', ytSearch:'pec deck machine proper form' },
     { name:'Landmine Press', equipment:'Barbell, Landmine Attachment', difficulty:'Intermediate', steps:['Stand facing landmine, feet shoulder-width','Hold end of bar at shoulder with both hands','Press bar up and slightly forward in an arc','Lower back to shoulder under full control'], tip:'Great for shoulder-friendly chest pressing — natural arc reduces joint stress.', ytSearch:'landmine press chest tutorial' },
+    { name:'Incline Dumbbell Press', equipment:'Dumbbells, Incline Bench', difficulty:'Intermediate', steps:['Set bench to 30-45 degrees, dumbbells at upper-chest level','Press up and slightly together until arms nearly locked','Lower slowly until you feel a stretch across the upper pecs','Keep wrists stacked over elbows throughout'], tip:'30-45 degrees targets the upper chest without turning it into a shoulder press.', ytSearch:'incline dumbbell press upper chest tutorial' },
+    { name:'Flat Barbell Bench Press', equipment:'Barbell, Bench', difficulty:'Intermediate', steps:['Lie flat, grip bar slightly wider than shoulders','Unrack and lower the bar to mid-chest, elbows ~75 degrees','Press back up to lockout, driving through the mid-foot','Keep shoulder blades pinched back and down'], tip:'Touch the same spot every rep — consistency is what builds the lift.', ytSearch:'barbell bench press form tutorial' },
+    { name:'Chest Dips', equipment:'Dip Bars', difficulty:'Intermediate', steps:['Support yourself on bars, lean your torso forward ~30 degrees','Lower until you feel a stretch across the chest','Keep elbows flared slightly out, not tucked','Press back up while keeping the forward lean'], tip:'The forward torso lean is what shifts the work from triceps to chest.', ytSearch:'chest dips proper form tutorial' },
+    { name:'Machine Chest Press', equipment:'Chest Press Machine', difficulty:'Beginner', steps:['Adjust seat so handles line up with mid-chest','Grip handles, press forward until arms nearly extended','Squeeze chest at the end of the press','Return slowly until you feel a stretch'], tip:'Safest way to push close to failure with no spotter needed.', ytSearch:'machine chest press form tutorial' },
+    { name:'Floor Press', equipment:'Barbell or Dumbbells', difficulty:'Beginner', steps:['Lie on the floor with weights at chest level','Press up to lockout','Lower until your triceps touch the floor and pause','Press back up without bouncing off the floor'], tip:'The floor limits range, taking strain off the shoulders — joint-friendly pressing.', ytSearch:'floor press chest tutorial' },
+    { name:'Svend Press', equipment:'Weight Plate', difficulty:'Beginner', steps:['Press two plates together at chest level with palms','Squeeze the plates together hard the entire time','Press the plates straight out until arms extend','Pull back to the chest while keeping the squeeze'], tip:'Pure inner-chest squeeze — great as a finisher or warm-up.', ytSearch:'svend press chest tutorial' }
   ],
   'Back': [
     { name:'Bent Over Row', equipment:'Barbell', difficulty:'Intermediate', steps:['Hinge at hips with slight knee bend, back flat','Grip bar slightly wider than shoulder-width, overhand','Pull bar toward lower chest, leading with elbows','Lower with control back to full arm extension'], tip:'Keep your chest up and spine neutral — never round your lower back.', ytSearch:'bent over row proper form tutorial' },
     { name:'Seated Cable Row', equipment:'Cable Machine', difficulty:'Beginner', steps:['Sit at cable row machine, knees slightly bent','Grip handle, pull toward lower chest driving elbows back','Squeeze shoulder blades together at end of pull','Slowly extend arms back to full stretch'], tip:'Think about putting your shoulder blades in your back pockets.', ytSearch:'seated cable row back tutorial' },
-    { name:'Single Arm Dumbbell Row', equipment:'Dumbbell, Bench', difficulty:'Beginner', steps:['Place one hand and knee on bench for support','Hold dumbbell in opposite hand, arm fully extended','Pull dumbbell toward hip, driving elbow straight back','Lower slowly back to full extension'], tip:'Imagine you are starting a lawn mower — pull straight back, not up.', ytSearch:'single arm dumbbell row form tutorial' },
-    { name:'Face Pull', equipment:'Cable Machine, Rope Attachment', difficulty:'Beginner', steps:['Set cable to upper chest height, attach rope','Grip rope ends with thumbs up, step back','Pull rope toward face, separating hands at end','Hold for 1 second, return slowly'], tip:'Great for rear delts and external rotation — balances pressing exercises.', ytSearch:'face pull proper form cable tutorial' },
-    { name:'T-Bar Row', equipment:'T-Bar Row Machine or Landmine', difficulty:'Intermediate', steps:['Straddle bar, hinge forward keeping back flat','Grip handles with both hands, chest against pad if available','Pull bar toward lower chest, elbows drive back','Lower with full control'], tip:'Chest supported version removes lower back fatigue entirely.', ytSearch:'t-bar row proper form tutorial' },
+    { name:'Single Arm Dumbbell Row', equipment:'Dumbbell, Bench', difficulty:'Beginner', steps:['Place one hand and knee on bench for support','Hold dumbbell in opposite hand, arm fully extended','Pull dumbbell toward hip, driving elbow straight back','Lower slowly back to full extension'], tip:'Imagine starting a lawn mower — pull straight back, not up.', ytSearch:'single arm dumbbell row form tutorial' },
+    { name:'Face Pull', equipment:'Cable Machine, Rope Attachment', difficulty:'Beginner', steps:['Set cable to upper chest height, attach rope','Grip rope ends with thumbs up, step back','Pull rope toward face, separating hands at end','Hold for 1 second, return slowly'], tip:'Great for rear delts and external rotation — balances pressing work.', ytSearch:'face pull proper form cable tutorial' },
+    { name:'T-Bar Row', equipment:'T-Bar Row Machine or Landmine', difficulty:'Intermediate', steps:['Straddle bar, hinge forward keeping back flat','Grip handles with both hands, chest against pad if available','Pull bar toward lower chest, elbows drive back','Lower with full control'], tip:'Chest-supported version removes lower back fatigue entirely.', ytSearch:'t-bar row proper form tutorial' },
+    { name:'Lat Pulldown', equipment:'Cable Machine, Lat Bar', difficulty:'Beginner', steps:['Grip the bar wider than shoulders, sit with thighs anchored','Pull the bar to your upper chest, driving elbows down and back','Squeeze the lats hard at the bottom','Let the bar rise slowly until arms are fully extended'], tip:'Lead with the elbows, not the hands — feel the lats, not the biceps.', ytSearch:'lat pulldown proper form tutorial' },
+    { name:'Pull-Up', equipment:'Pull-Up Bar', difficulty:'Advanced', steps:['Hang from the bar, overhand grip slightly wider than shoulders','Pull until your chin clears the bar, chest up','Squeeze your lats at the top','Lower slowly to a full dead hang'], tip:'Drive your elbows toward the floor rather than thinking about your hands.', ytSearch:'pull up proper form tutorial' },
+    { name:'Chest-Supported Row', equipment:'Incline Bench, Dumbbells', difficulty:'Beginner', steps:['Lie chest-down on a 30-45 degree incline bench','Let dumbbells hang straight down, palms facing back','Row both up, driving elbows toward the ceiling','Squeeze the mid-back, then lower slowly'], tip:'The chest pad kills momentum so the back does all the work.', ytSearch:'chest supported dumbbell row tutorial' },
+    { name:'Straight-Arm Pulldown', equipment:'Cable Machine, Straight Bar', difficulty:'Beginner', steps:['Stand facing a high pulley, grip the bar with arms straight','Keep a slight bend and push the bar down to your thighs in an arc','Squeeze the lats at the bottom','Return slowly overhead, feeling the stretch'], tip:'Pure lat isolation with zero biceps involvement.', ytSearch:'straight arm pulldown lat tutorial' },
+    { name:'Inverted Row', equipment:'Barbell in Rack or Smith Machine', difficulty:'Beginner', steps:['Set bar at hip height, lie underneath it','Grip slightly wider than shoulders, body straight','Pull chest up to the bar leading with elbows','Lower slowly back to full extension'], tip:'The more horizontal your body, the harder it gets — elevate feet to progress.', ytSearch:'inverted row proper form tutorial' },
+    { name:'Neutral Grip Pull-Up', equipment:'Pull-Up Bar with Neutral Grips', difficulty:'Intermediate', steps:['Hang from neutral grip handles, arms fully extended','Pull body up until chin clears the handles','Hold briefly, squeeze back and biceps','Lower slowly to a dead hang'], tip:'Neutral grip is easier on the wrists and balances back and biceps work.', ytSearch:'neutral grip pull up tutorial' }
   ],
   'Shoulders': [
-    { name:'Lateral Raise', equipment:'Dumbbells', difficulty:'Beginner', steps:['Stand holding dumbbells at sides, slight bend in elbows','Raise arms out to sides until parallel to floor','Pause briefly at top, lower slowly over 3 seconds','Keep thumbs slightly higher than pinkies'], tip:'Lead with your elbows, not your hands — protects rotator cuff.', ytSearch:'lateral raise proper form tutorial' },
-    { name:'Arnold Press', equipment:'Dumbbells', difficulty:'Intermediate', steps:['Sit holding dumbbells at shoulder height, palms facing you','Press up while rotating palms forward at top','Reverse the rotation on the way back down','Full range of motion on both press and rotation'], tip:'The rotation recruits all three heads of the deltoid.', ytSearch:'arnold press shoulder tutorial' },
-    { name:'Front Raise', equipment:'Dumbbells or Plate', difficulty:'Beginner', steps:['Stand holding weights in front of thighs','Raise one arm straight in front to shoulder height','Lower slowly while raising the opposite arm','Keep slight bend in elbows throughout'], tip:'Alternate arms to keep continuous tension and reduce momentum.', ytSearch:'front raise shoulder form tutorial' },
-    { name:'Cable Lateral Raise', equipment:'Cable Machine', difficulty:'Beginner', steps:['Stand sideways to low cable pulley','Grip handle with far hand, arm across body','Raise arm out to side until parallel to floor','Lower slowly with full control'], tip:'Cable provides constant tension unlike dumbbells which lose tension at bottom.', ytSearch:'cable lateral raise shoulder tutorial' },
-    { name:'Behind The Neck Press', equipment:'Barbell', difficulty:'Advanced', steps:['Sit with barbell across upper traps behind neck','Press bar straight up to full extension overhead','Lower slowly back to starting position behind neck','Keep elbows tracking forward, not flared wide'], tip:'Only for those with flexible shoulders — skip if any discomfort felt.', ytSearch:'behind the neck press form tutorial' },
+    { name:'Lateral Raise', equipment:'Dumbbells', difficulty:'Beginner', steps:['Stand holding dumbbells at sides, slight bend in elbows','Raise arms out to sides until parallel to floor','Pause briefly at top, lower slowly over 3 seconds','Keep thumbs slightly higher than pinkies'], tip:'Lead with your elbows, not your hands — protects the rotator cuff.', ytSearch:'lateral raise proper form tutorial' },
+    { name:'Arnold Press', equipment:'Dumbbells', difficulty:'Intermediate', steps:['Sit holding dumbbells at shoulder height, palms facing you','Press up while rotating palms forward at the top','Reverse the rotation on the way back down','Full range of motion on both the press and rotation'], tip:'The rotation recruits all three heads of the deltoid.', ytSearch:'arnold press shoulder tutorial' },
+    { name:'Front Raise', equipment:'Dumbbells or Plate', difficulty:'Beginner', steps:['Stand holding weights in front of thighs','Raise one arm straight in front to shoulder height','Lower slowly while raising the opposite arm','Keep a slight bend in the elbows throughout'], tip:'Alternate arms to keep continuous tension and reduce momentum.', ytSearch:'front raise shoulder form tutorial' },
+    { name:'Cable Lateral Raise', equipment:'Cable Machine', difficulty:'Beginner', steps:['Stand sideways to a low cable pulley','Grip handle with far hand, arm across body','Raise arm out to the side until parallel to floor','Lower slowly with full control'], tip:'Cable provides constant tension, unlike dumbbells which lose it at the bottom.', ytSearch:'cable lateral raise shoulder tutorial' },
+    { name:'Behind The Neck Press', equipment:'Barbell', difficulty:'Advanced', steps:['Sit with barbell across upper traps behind neck','Press the bar straight up to full extension overhead','Lower slowly back behind the neck','Keep elbows tracking forward, not flared wide'], tip:'Only for those with flexible shoulders — skip if any discomfort is felt.', ytSearch:'behind the neck press form tutorial' },
+    { name:'Overhead Barbell Press', equipment:'Barbell', difficulty:'Intermediate', steps:['Hold the bar at collarbone height, grip just outside shoulders','Brace your core and press straight overhead','Move your head slightly back, then forward as the bar passes','Lock out overhead, then lower under control'], tip:'Squeeze your glutes to stop your lower back from arching.', ytSearch:'overhead barbell press form tutorial' },
+    { name:'Seated Dumbbell Shoulder Press', equipment:'Dumbbells, Bench', difficulty:'Beginner', steps:['Sit upright with back supported, dumbbells at shoulder height','Press both up until arms are nearly locked out','Keep wrists stacked over elbows','Lower slowly back to shoulder level'], tip:'Stop just short of clashing the dumbbells to keep tension on the delts.', ytSearch:'seated dumbbell shoulder press tutorial' },
+    { name:'Rear Delt Fly', equipment:'Dumbbells', difficulty:'Beginner', steps:['Hinge forward at the hips, back flat, slight bend in elbows','Let dumbbells hang straight down','Raise arms out to the sides, squeezing rear delts','Lower slowly without using momentum'], tip:'Use light weight — rear delts respond to control, not load.', ytSearch:'rear delt fly tutorial' },
+    { name:'Upright Row', equipment:'Cable or Dumbbells', difficulty:'Intermediate', steps:['Hold the weight in front of your thighs, hands shoulder-width','Pull straight up the body, leading with the elbows','Stop when the elbows reach shoulder height','Lower slowly under control'], tip:'Keep the elbows below shoulder height if you feel any pinching.', ytSearch:'upright row shoulder tutorial' },
+    { name:'Machine Shoulder Press', equipment:'Shoulder Press Machine', difficulty:'Beginner', steps:['Adjust the seat so handles sit at shoulder height','Press up until arms are nearly extended','Squeeze the delts at the top','Lower slowly to the start'], tip:'Fixed path lets you push close to failure safely.', ytSearch:'machine shoulder press tutorial' },
+    { name:'Cable Rear Delt Pull', equipment:'Cable Machine', difficulty:'Beginner', steps:['Set two pulleys to face height, cross the cables','Grip the opposite handle in each hand','Pull both hands out and back, opening the arms wide','Squeeze the rear delts, return slowly'], tip:'Constant cable tension makes this better than dumbbells for rear delts.', ytSearch:'cable rear delt pull tutorial' }
   ],
   'Legs': [
-    { name:'Bulgarian Split Squat', equipment:'Dumbbells, Bench', difficulty:'Intermediate', steps:['Stand 2 feet in front of bench, place rear foot on it','Lower front knee until it nearly touches floor','Keep front shin as vertical as possible','Drive through front heel to return to start'], tip:'Most of your weight should be on the front foot — 80/20 split.', ytSearch:'bulgarian split squat form tutorial' },
-    { name:'Leg Press', equipment:'Leg Press Machine', difficulty:'Beginner', steps:['Sit in machine, feet shoulder-width on platform','Lower weight until knees are at 90 degrees','Press through full foot to extend legs','Stop just before knees lock out at top'], tip:'Never lock your knees — keep constant tension in the quads.', ytSearch:'leg press proper form tutorial' },
-    { name:'Romanian Deadlift', equipment:'Barbell or Dumbbells', difficulty:'Intermediate', steps:['Stand holding bar in front of thighs, shoulder-width grip','Hinge at hips, pushing them back, bar stays close to legs','Lower until you feel deep hamstring stretch','Drive hips forward to return to standing'], tip:'This is a hip hinge not a squat — feel the hamstrings load up.', ytSearch:'romanian deadlift form tutorial' },
-    { name:'Hack Squat', equipment:'Hack Squat Machine', difficulty:'Intermediate', steps:['Step into machine, shoulders under pads, feet shoulder-width','Release safety and lower until thighs are parallel','Drive through heels back to start position','Keep chest up and back flat against pad'], tip:'Foot position changes emphasis — higher feet hit glutes, lower hits quads.', ytSearch:'hack squat machine form tutorial' },
-    { name:'Walking Lunge', equipment:'Dumbbells or Bodyweight', difficulty:'Beginner', steps:['Stand tall holding dumbbells at sides','Step forward with one leg, lower back knee toward floor','Push off front foot and step forward with the other leg','Continue alternating legs across the floor'], tip:'Keep your torso upright — do not lean forward over the front knee.', ytSearch:'walking lunge proper form tutorial' },
+    { name:'Bulgarian Split Squat', equipment:'Dumbbells, Bench', difficulty:'Intermediate', steps:['Stand 2 feet in front of a bench, place rear foot on it','Lower the front knee until it nearly touches the floor','Keep the front shin as vertical as possible','Drive through the front heel to return to start'], tip:'Most of your weight should be on the front foot — 80/20 split.', ytSearch:'bulgarian split squat form tutorial' },
+    { name:'Leg Press', equipment:'Leg Press Machine', difficulty:'Beginner', steps:['Sit in the machine, feet shoulder-width on the platform','Lower the weight until knees reach about 90 degrees','Press through the full foot to extend the legs','Stop just before the knees lock out at the top'], tip:'Never lock your knees — keep constant tension in the quads.', ytSearch:'leg press proper form tutorial' },
+    { name:'Romanian Deadlift', equipment:'Barbell or Dumbbells', difficulty:'Intermediate', steps:['Stand holding the bar in front of thighs, shoulder-width grip','Hinge at the hips, pushing them back, bar close to legs','Lower until you feel a deep hamstring stretch','Drive hips forward to return to standing'], tip:'This is a hip hinge, not a squat — feel the hamstrings load up.', ytSearch:'romanian deadlift form tutorial' },
+    { name:'Hack Squat', equipment:'Hack Squat Machine', difficulty:'Intermediate', steps:['Step in, shoulders under pads, feet shoulder-width','Release the safety and lower until thighs are parallel','Drive through the heels back to the start','Keep chest up and back flat against the pad'], tip:'Higher feet hit glutes more, lower feet hit quads more.', ytSearch:'hack squat machine form tutorial' },
+    { name:'Walking Lunge', equipment:'Dumbbells or Bodyweight', difficulty:'Beginner', steps:['Stand tall holding dumbbells at your sides','Step forward, lowering the back knee toward the floor','Push off the front foot and step forward with the other leg','Continue alternating legs across the floor'], tip:'Keep your torso upright — do not lean forward over the front knee.', ytSearch:'walking lunge proper form tutorial' },
+    { name:'Back Squat', equipment:'Barbell, Rack', difficulty:'Advanced', steps:['Set the bar across your upper traps, grip just outside shoulders','Brace your core, unrack, and step back','Sit down and back until thighs are at least parallel','Drive through your mid-foot back to standing'], tip:'Push your knees out in line with your toes the whole way down.', ytSearch:'back squat proper form tutorial' },
+    { name:'Goblet Squat', equipment:'Dumbbell or Kettlebell', difficulty:'Beginner', steps:['Hold one weight vertically against your chest','Squat down between your knees, keeping the chest tall','Go as deep as your mobility allows','Drive up through the heels to stand'], tip:'The front-loaded weight forces an upright torso — great for learning to squat.', ytSearch:'goblet squat form tutorial' },
+    { name:'Leg Extension', equipment:'Leg Extension Machine', difficulty:'Beginner', steps:['Sit with the pad on top of the lower shins','Extend the legs until straight, squeezing the quads','Hold the top for one second','Lower slowly under control'], tip:'Pause and squeeze at the top — that peak contraction is the whole point.', ytSearch:'leg extension proper form tutorial' },
+    { name:'Lying Leg Curl', equipment:'Leg Curl Machine', difficulty:'Beginner', steps:['Lie face-down, pad against the back of the ankles','Curl the heels toward your glutes','Squeeze the hamstrings hard at the top','Lower slowly to full extension'], tip:'Keep your hips pressed into the pad so the hamstrings do the work.', ytSearch:'lying leg curl form tutorial' },
+    { name:'Front Squat', equipment:'Barbell, Rack', difficulty:'Advanced', steps:['Rest the bar across the front delts, elbows high','Brace and squat straight down, keeping the torso upright','Descend until thighs are at least parallel','Drive up while keeping the elbows high'], tip:'Elbows dropping is what makes you tip forward — keep them pointed ahead.', ytSearch:'front squat form tutorial' },
+    { name:'Hip Thrust', equipment:'Barbell, Bench', difficulty:'Intermediate', steps:['Sit on the floor with upper back against a bench, bar over hips','Drive through the heels to lift the hips to full extension','Squeeze the glutes hard at the top','Lower under control until just above the floor'], tip:'At the top your body should form a flat tabletop — ribs down, glutes squeezed.', ytSearch:'hip thrust glute form tutorial' }
   ],
   'Triceps': [
-    { name:'Tricep Pushdown', equipment:'Cable Machine, Rope or Bar', difficulty:'Beginner', steps:['Stand at high cable, grip rope or bar with overhand grip','Lock elbows at sides, push attachment down to full extension','Squeeze triceps hard at bottom of movement','Let weight rise slowly back to starting position'], tip:'Keep elbows glued to your sides — if they flare, you are using too much weight.', ytSearch:'tricep pushdown cable form tutorial' },
-    { name:'Skull Crusher', equipment:'EZ Bar or Dumbbells, Bench', difficulty:'Intermediate', steps:['Lie on bench holding weight above chest, elbows up','Lower weight toward forehead by bending only at elbows','Stop just before touching forehead','Press back up to full extension over chest'], tip:'Slight lay-back of upper arms increases long head stretch significantly.', ytSearch:'skull crusher tricep form tutorial' },
-    { name:'Close Grip Bench Press', equipment:'Barbell, Bench', difficulty:'Intermediate', steps:['Lie on bench, grip bar with hands about 12 inches apart','Lower bar to lower chest with elbows tucked in','Press bar back up to full extension','Keep elbows tracking alongside your torso'], tip:'Tucking elbows in is critical — flaring shifts work to chest.', ytSearch:'close grip bench press tricep tutorial' },
-    { name:'Dumbbell Kickback', equipment:'Dumbbells', difficulty:'Beginner', steps:['Hinge forward at hips, back flat and parallel to floor','Upper arm parallel to floor, elbow at 90 degrees','Extend forearm back until arm is fully straight','Lower slowly back to starting position'], tip:'Squeeze hard at the top — the peak contraction is where triceps grow.', ytSearch:'tricep kickback dumbbell form tutorial' },
-  ],
-  'Biceps / Back': [
-    { name:'Inverted Row', equipment:'Barbell in Rack or Smith Machine', difficulty:'Beginner', steps:['Set bar at hip height in rack, lie underneath it','Grip bar slightly wider than shoulders, body straight','Pull chest up to bar leading with elbows','Lower slowly back to full extension'], tip:'The more horizontal your body, the harder it gets — elevate feet to increase difficulty.', ytSearch:'inverted row proper form tutorial' },
-    { name:'Resistance Band Curl', equipment:'Resistance Band', difficulty:'Beginner', steps:['Stand on center of resistance band, feet shoulder-width','Grip handles with underhand grip, arms fully extended','Curl both hands up toward shoulders','Slowly lower back to full extension'], tip:'Great when no equipment available — go slow to maximize tension.', ytSearch:'resistance band bicep curl tutorial' },
-    { name:'Neutral Grip Pull-Up', equipment:'Pull-Up Bar with Neutral Grips', difficulty:'Intermediate', steps:['Hang from neutral grip handles, arms fully extended','Pull body up until chin clears handles','Hold briefly at top, squeeze back and biceps','Lower slowly back to dead hang'], tip:'Neutral grip is easier on the wrists and hits biceps brachii and brachialis equally.', ytSearch:'neutral grip pull up form tutorial' },
+    { name:'Tricep Pushdown', equipment:'Cable Machine, Rope or Bar', difficulty:'Beginner', steps:['Stand at high cable, grip rope or bar with overhand grip','Lock elbows at sides, push down to full extension','Squeeze triceps hard at the bottom','Let the weight rise slowly back to the start'], tip:'Keep elbows glued to your sides — if they flare, drop the weight.', ytSearch:'tricep pushdown cable form tutorial' },
+    { name:'Skull Crusher', equipment:'EZ Bar or Dumbbells, Bench', difficulty:'Intermediate', steps:['Lie on a bench holding weight above the chest, elbows up','Lower toward the forehead by bending only at the elbows','Stop just before touching the forehead','Press back up to full extension over the chest'], tip:'A slight lay-back of the upper arms increases the long-head stretch.', ytSearch:'skull crusher tricep form tutorial' },
+    { name:'Close Grip Bench Press', equipment:'Barbell, Bench', difficulty:'Intermediate', steps:['Lie on the bench, grip the bar about shoulder-width','Lower the bar to the lower chest with elbows tucked','Press back up to full extension','Keep elbows tracking alongside the torso'], tip:'Tucking the elbows is critical — flaring shifts work to the chest.', ytSearch:'close grip bench press tricep tutorial' },
+    { name:'Dumbbell Kickback', equipment:'Dumbbells', difficulty:'Beginner', steps:['Hinge forward at the hips, back flat and parallel to floor','Upper arm parallel to the floor, elbow at 90 degrees','Extend the forearm back until the arm is fully straight','Lower slowly back to the start'], tip:'Squeeze hard at the top — peak contraction is where triceps grow.', ytSearch:'tricep kickback dumbbell form tutorial' },
+    { name:'Overhead Cable Extension', equipment:'Cable Machine, Rope', difficulty:'Intermediate', steps:['Face away from a low pulley, rope overhead, elbows by ears','Extend the arms straight overhead','Squeeze the triceps at full extension','Lower slowly behind the head for a deep stretch'], tip:'The overhead position loads the long head — the biggest part of the triceps.', ytSearch:'overhead cable tricep extension tutorial' },
+    { name:'Triceps Dips', equipment:'Dip Bars or Bench', difficulty:'Intermediate', steps:['Support yourself on bars, keep your torso upright','Lower until the elbows reach about 90 degrees','Keep elbows tucked straight back, not flared','Press back up to full lockout'], tip:'Staying upright (vs leaning forward) keeps the focus on triceps.', ytSearch:'triceps dips proper form tutorial' },
+    { name:'Rope Overhead Extension', equipment:'Cable Machine, Rope', difficulty:'Beginner', steps:['Set rope on a low pulley, face away, rope behind the head','Keep elbows high and pointed forward','Extend the arms up and slightly apart at the top','Lower under control for a full stretch'], tip:'Spread the rope apart at the top for an extra contraction.', ytSearch:'rope overhead tricep extension tutorial' },
+    { name:'Bench Dip', equipment:'Bench', difficulty:'Beginner', steps:['Hands on edge of a bench behind you, legs out front','Lower your body by bending the elbows straight back','Stop when upper arms are parallel to the floor','Press back up to lockout'], tip:'Keep your back close to the bench to protect the shoulders.', ytSearch:'bench dip tricep tutorial' },
+    { name:'Single-Arm Cable Pushdown', equipment:'Cable Machine, Single Handle', difficulty:'Beginner', steps:['Grip a single handle at a high pulley, underhand or neutral','Pin the elbow to your side and push down to lockout','Squeeze the triceps, focusing on one arm','Return slowly under control'], tip:'Working one arm at a time fixes side-to-side strength imbalances.', ytSearch:'single arm cable pushdown tutorial' },
+    { name:'JM Press', equipment:'Barbell, Bench', difficulty:'Advanced', steps:['Lie on a bench, close grip, lower the bar toward the chin/neck','Let the elbows travel forward as you lower (half row, half press)','Stop when the bar is near the upper chest','Press back up to lockout'], tip:'A hybrid of a close-grip press and skull crusher — heavy triceps overload.', ytSearch:'jm press triceps tutorial' }
   ]
 };
 
+// Map any muscle label (glossary string like "Chest / Front Delt" or the
+// uppercase day label like "CHEST") onto one of the SWAP_DB buckets.
+function swapBucket(muscle) {
+  if (!muscle) return 'Biceps';
+  var m = String(muscle).toLowerCase();
+  // order matters: check the first muscle named in compound strings first
+  var first = m.split('/')[0];
+  function has(s, kw) { return s.indexOf(kw) > -1; }
+  function pick(s) {
+    if (has(s, 'tricep')) return 'Triceps';
+    if (has(s, 'bicep') || has(s, 'brachi')) return 'Biceps';
+    if (has(s, 'chest') || has(s, 'pec'))    return 'Chest';
+    if (has(s, 'delt') || has(s, 'shoulder') || has(s, 'trap')) return 'Shoulders';
+    if (has(s, 'back') || has(s, 'lat') || has(s, 'row') || has(s, 'rhom')) return 'Back';
+    if (has(s, 'leg') || has(s, 'quad') || has(s, 'glute') || has(s, 'ham') ||
+        has(s, 'calf') || has(s, 'squat')) return 'Legs';
+    return null;
+  }
+  return pick(first) || pick(m) || 'Biceps';
+}
 var swapIndex = {};
 
 function openSwap(exName, muscle, panelId) {
@@ -2454,7 +2505,7 @@ function openSwap(exName, muscle, panelId) {
   panel.style.display = 'block';
 
   // Find alternatives for this muscle group
-  var alts = SWAP_DB[muscle] || SWAP_DB['Biceps'];
+  var alts = SWAP_DB[swapBucket(muscle)] || SWAP_DB['Biceps'];
   if (!alts || !alts.length) {
     panel.innerHTML = '<div style="padding:14px;color:var(--muted);font-size:.82rem;text-align:center">No alternatives found for this muscle group.</div>';
     return;
@@ -2469,7 +2520,7 @@ function openSwap(exName, muscle, panelId) {
 function swapGetNew(btn, exName, muscle, panelId) {
   if (!swapIndex[panelId]) swapIndex[panelId] = 0;
   swapIndex[panelId]++;
-  var alts = SWAP_DB[muscle] || SWAP_DB['Biceps'];
+  var alts = SWAP_DB[swapBucket(muscle)] || SWAP_DB['Biceps'];
   var idx = swapIndex[panelId] % alts.length;
   var panel = document.getElementById(panelId);
   if (panel) renderSwap(panel, alts[idx], exName, muscle, panelId);
@@ -2477,7 +2528,7 @@ function swapGetNew(btn, exName, muscle, panelId) {
 
 function renderSwap(panel, alt, originalName, muscle, panelId) {
   var ytUrl = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(alt.ytSearch || alt.name + ' exercise tutorial');
-  var alts  = SWAP_DB[muscle] || [];
+  var alts  = SWAP_DB[swapBucket(muscle)] || [];
   var idx   = (swapIndex[panelId] || 0) % (alts.length || 1);
 
   panel.innerHTML = '';
@@ -2563,21 +2614,71 @@ function renderSwap(panel, alt, originalName, muscle, panelId) {
 
 
 // ═══════════════════════════════════════════════════
-// PARTNER VOICE CHAT — Daily.co embedded room
+// PARTNER VOICE CHAT — WebRTC signaled over Firebase REST
+// No SDK, no backend, no exposed secret. Works on GitHub Pages.
+// Same polling pattern as Don't Spill It — carries SDP/ICE, not game state.
 // ═══════════════════════════════════════════════════
-var pttDailyFrame = null;
-var wtMicOn       = false;
-var wtMicLocked   = false;
-var pttBarSigInterval = null;
-var peerConnections   = {};
-var pttRoomCode   = null;
 
+// ── CONFIG ─────────────────────────────────────────
+// Point this at any Firebase Realtime Database you control. You can reuse
+// your Don't Spill It DB — the /ptt path keeps voice signaling separate
+// from game data. NO trailing slash.
+var PTT_DB  = 'https://dont-spill-it-default-rtdb.firebaseio.com';
+
+// STUN works when both phones are on the same wifi (likely at the gym).
+// Cross-network (one on cellular) needs TURN. Grab free creds — 5GB/mo at
+// metered.ca, or instant at speed.cloudflare.com/turn-creds — then uncomment:
+var PTT_ICE = [
+  { urls: 'stun:stun.l.google.com:19302' },
+  { urls: 'stun:stun1.l.google.com:19302' }
+  // ,{ urls: 'turn:HOST:80', username: 'USER', credential: 'PASS' }
+  // ,{ urls: 'turn:HOST:443?transport=tcp', username: 'USER', credential: 'PASS' }
+];
+
+// ── STATE ──────────────────────────────────────────
+var pc = null, localStream = null, pttRemoteEl = null;
+var myId = null, pttRole = null, pttRoomCode = null;
+var pttPolls = [], pttHeartbeat = null, pttSafety = null;
+var pttSeen = {}, pttCandBuf = [], pttCandFlushed = false, pttConnected = false;
+var wtMicOn = false, wtMicLocked = false, pttBarSigInterval = null;
+var peerConnections = {};           // kept so existing UI checks still work
+var pttRemoteRAF = null;
+
+// ── Firebase REST helpers ──────────────────────────
+function fbPath(p) { return PTT_DB + p + '.json'; }
+function fbGet(p)  { return fetch(fbPath(p)).then(function(r){ return r.json(); }); }
+function fbPut(p,d){ return fetch(fbPath(p),{ method:'PUT',  body:JSON.stringify(d) }).then(function(r){ return r.json(); }); }
+function fbPush(p,d){ return fetch(fbPath(p),{ method:'POST', body:JSON.stringify(d) }).then(function(r){ return r.json(); }); }
+function fbDel(p)  { return fetch(fbPath(p),{ method:'DELETE' }); }
+function pttRoot() { return '/ptt/' + pttRoomCode; }
+
+function pttRemote() {
+  if (!pttRemoteEl) pttRemoteEl = document.getElementById('pttRemoteAudio');
+  return pttRemoteEl;
+}
+function hideEl(id) { var e = document.getElementById(id); if (e) e.style.display = 'none'; }
+function setJoinBtn(txt, dis) {
+  ['pttSheetJoinBtn','wtJoinBtn'].forEach(function(id) {
+    var e = document.getElementById(id); if (e) { e.textContent = txt; e.disabled = !!dis; }
+  });
+}
+
+// ── Small UI helpers ───────────────────────────────
+function pttBarSetSub(t) { var e = document.getElementById('pttBarSub'); if (e) e.textContent = t; }
+function pttBarSetStatus(t, color) {
+  var cb = document.getElementById('pttBarConnect');
+  if (!cb) return;
+  if (t === 'Connected')        { cb.textContent = 'Connected';  cb.classList.add('active'); }
+  else if (t === 'Connecting...') { cb.textContent = 'Connecting…'; cb.classList.remove('active'); }
+  else                          { cb.textContent = '⚡ Connect';  cb.classList.remove('active'); }
+}
+
+// ── Room code plumbing ─────────────────────────────
 function pttGetCode() {
   var v1 = (document.getElementById('pttSheetUrl') || {}).value || '';
   var v2 = (document.getElementById('wtRoomUrl')   || {}).value || '';
   return (v1 || v2).trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
 }
-
 function pttBarGenCode() {
   var words = ['APEX','IRON','BEAST','GRIND','GAINS','SQUAD','SWEAT','PUSH','LIFT','FLEX'];
   var code = words[Math.floor(Math.random() * words.length)] + Math.floor(100 + Math.random() * 900);
@@ -2585,7 +2686,6 @@ function pttBarGenCode() {
     var el = document.getElementById(id); if (el) el.value = code;
   });
 }
-
 function pttBarToggleSheet() {
   var sheet = document.getElementById('pttSheet');
   if (!sheet) return;
@@ -2599,7 +2699,6 @@ function pttBarToggleSheet() {
     sheet.classList.add('open');
   }
 }
-
 document.addEventListener('click', function(e) {
   var sheet = document.getElementById('pttSheet');
   var bar   = document.getElementById('pttBar');
@@ -2608,14 +2707,7 @@ document.addEventListener('click', function(e) {
     sheet.classList.remove('open');
   }
 });
-
-function pttResetBtn() {
-  ['pttSheetJoinBtn','wtJoinBtn'].forEach(function(id) {
-    var el = document.getElementById(id);
-    if (el) { el.textContent = 'Join Room'; el.disabled = false; }
-  });
-}
-
+function pttResetBtn() { setJoinBtn('Join Room', false); }
 function pttShowErr(msg) {
   pttResetBtn();
   ['pttSheetErr','wtError'].forEach(function(id) {
@@ -2623,97 +2715,183 @@ function pttShowErr(msg) {
     if (!el) return; el.textContent = msg; el.style.display = 'block';
   });
   pttBarSetStatus('Disconnected', null);
-  pttBarSetSub('Tap Connect to start');
+  pttBarSetSub('Tap ⚡ to connect');
 }
 
+// ── Join ───────────────────────────────────────────
 async function pttBarJoin() {
   var code = pttGetCode();
-  ['pttSheetErr','wtError'].forEach(function(id) {
-    var el = document.getElementById(id); if (el) el.style.display = 'none';
-  });
+  hideEl('pttSheetErr'); hideEl('wtError');
 
   if (!code || code.length < 3) { pttShowErr('Enter a room code (at least 3 characters)'); return; }
+  if (!PTT_DB || PTT_DB.indexOf('YOUR-DB') > -1) {
+    pttShowErr('Voice chat not configured — set PTT_DB to your Firebase database URL.'); return;
+  }
+  if (pc) { await pttBarLeave(); }   // clean restart
 
   localStorage.setItem('ap-room-code', code);
   pttRoomCode = code;
+  pttSeen = {}; pttCandBuf = []; pttCandFlushed = false; pttRole = null;
+  pttConnected = false; peerConnections = {};
 
-  ['pttSheetJoinBtn','wtJoinBtn'].forEach(function(id) {
-    var el = document.getElementById(id);
-    if (el) { el.textContent = 'Joining...'; el.disabled = true; }
-  });
+  setJoinBtn('Joining...', true);
   pttBarSetStatus('Connecting...', '#f59e0b');
-  pttBarSetSub('Connecting...');
+  pttBarSetSub('Getting mic…');
 
-  // Use Daily.co public rooms — room name = code, audio only
-  // Daily free rooms are public and created on first join
-  var roomUrl = 'https://felixcid2213.daily.co/' + code.toLowerCase();
-
-  try {
-    // Load Daily.co script
-    if (!window.DailyIframe) {
-      await new Promise(function(resolve, reject) {
-        var s = document.createElement('script');
-        s.src = 'https://unpkg.com/@daily-co/daily-js';
-        s.onload = resolve;
-        s.onerror = function() { reject(new Error('Could not load Daily.co')); };
-        document.head.appendChild(s);
-        setTimeout(function() { reject(new Error('Load timed out')); }, 8000);
-      });
+  pttSafety = setTimeout(function() {
+    if (!(pc && (pc.connectionState === 'connected' || pttConnected))) {
+      pttShowErr('Couldn\'t connect within 20s. Make sure your partner tapped Join with the SAME code. On different networks you may need a TURN server (see PTT_ICE).');
     }
+  }, 20000);
 
-    // Create Daily call object — audio only, no video
-    pttDailyFrame = window.DailyIframe.createCallObject({
-      audioSource: true,
-      videoSource: false
+  // 1. Mic
+  try {
+    localStream = await navigator.mediaDevices.getUserMedia({
+      audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+      video: false
     });
-
-    pttDailyFrame.on('joined-meeting', function() {
-      // Mute mic by default — PTT style
-      pttDailyFrame.setLocalAudio(false);
-      pttOnJoined(code);
-      pttBarSetSub('Waiting for partner...');
-    });
-
-    pttDailyFrame.on('participant-joined', function(e) {
-      if (!e.participant.local) {
-        peerConnections['partner'] = { active: true };
-        pttBarSetSub('Partner connected · Hold mic to talk');
-        pttRenderPeers();
-        pttBarStartSig();
-        setTimeout(pttBarStopSig, 1000);
-      }
-    });
-
-    pttDailyFrame.on('participant-left', function(e) {
-      if (!e.participant.local) {
-        delete peerConnections['partner'];
-        pttRenderPeers();
-        pttBarSetSub('Partner left · Waiting...');
-      }
-    });
-
-    pttDailyFrame.on('left-meeting', function() {
-      pttCleanup();
-    });
-
-    pttDailyFrame.on('error', function(e) {
-      console.error('Daily error:', e);
-      pttShowErr('Connection error: ' + (e.errorMsg || 'Try again'));
-      pttCleanup();
-    });
-
-    await pttDailyFrame.join({ url: roomUrl, audioSource: true, videoSource: false });
-
-  } catch(err) {
-    console.error('PTT join error:', err);
-    pttShowErr(err.message || 'Could not connect. Try again.');
+    var tr0 = localStream.getAudioTracks()[0];
+    if (tr0) tr0.enabled = false;   // PTT: muted until held
+  } catch (e) {
+    clearTimeout(pttSafety);
+    pttShowErr(e && e.name === 'NotAllowedError'
+      ? 'Microphone blocked. Allow mic access in your browser and try again.'
+      : 'No microphone available.');
+    return;
   }
+
+  // 2. Peer connection
+  pc = new RTCPeerConnection({ iceServers: PTT_ICE });
+  localStream.getTracks().forEach(function(t) { pc.addTrack(t, localStream); });
+
+  pc.onicecandidate = function(ev) {
+    if (!ev.candidate) return;
+    if (!pttRole || !pttCandFlushed) { pttCandBuf.push(ev.candidate); return; }
+    fbPush(pttRoot() + '/' + pttRole + 'Cand', ev.candidate.toJSON());
+  };
+  pc.ontrack = function(ev) {
+    var el = pttRemote();
+    if (el) { el.srcObject = ev.streams[0]; if (el.play) el.play().catch(function(){}); }
+    pttSetupRemoteMeter(ev.streams[0]);
+  };
+  pc.onconnectionstatechange = function() {
+    var s = pc.connectionState;
+    if (s === 'connected') { pttMarkConnected(); }
+    else if (s === 'disconnected' || s === 'failed') {
+      delete peerConnections['partner']; pttRenderPeers();
+      pttBarSetSub(s === 'failed' ? 'Connection lost — leave & rejoin' : 'Partner left · waiting…');
+    }
+  };
+  pc.oniceconnectionstatechange = function() {
+    var s = pc.iceConnectionState;
+    if (s === 'connected' || s === 'completed') pttMarkConnected();
+  };
+
+  // 3. Presence + deterministic role (glare-free: both compute same roles)
+  myId = Math.random().toString(36).slice(2, 11);
+  await fbPut(pttRoot() + '/peers/' + myId, Date.now());
+  pttHeartbeat = setInterval(function() { fbPut(pttRoot() + '/peers/' + myId, Date.now()); }, 8000);
+  pttBarSetSub('Waiting for partner…');
+  pttResetBtn();
+  pttDecideRole();
 }
 
-function pttOnJoined(code) {
+function pttMarkConnected() {
+  if (pttConnected) return;
+  pttConnected = true;
+  if (pttSafety) { clearTimeout(pttSafety); pttSafety = null; }
+  peerConnections['partner'] = { active: true };
+  pttOnJoined();
+  pttBarSetSub('Partner connected · Hold mic to talk');
+  pttRenderPeers();
+}
+
+function pttDecideRole() {
+  var t = setInterval(async function() {
+    if (pttRole) { clearInterval(t); return; }
+    var peers = (await fbGet(pttRoot() + '/peers')) || {};
+    var now = Date.now();
+    var fresh = Object.keys(peers).filter(function(id) {
+      return (now - (peers[id] || 0)) < 25000;
+    }).sort();
+    if (fresh.length >= 2) {
+      clearInterval(t);
+      var caller = fresh[0];
+      if (myId === caller) { pttRole = 'caller'; pttRunCaller(); }
+      else                 { pttRole = 'callee'; pttRunCallee(); }
+    }
+  }, 1200);
+  pttPolls.push(t);
+}
+
+function pttFlushCands() {
+  pttCandBuf.forEach(function(c) { fbPush(pttRoot() + '/' + pttRole + 'Cand', c.toJSON()); });
+  pttCandBuf = [];
+  pttCandFlushed = true;
+}
+
+async function pttRunCaller() {
+  // wipe stale signaling from a prior session before offering
+  await fbDel(pttRoot() + '/answer');
+  await fbDel(pttRoot() + '/callerCand');
+  await fbDel(pttRoot() + '/calleeCand');
+  pttFlushCands();
+  try {
+    var offer = await pc.createOffer({ offerToReceiveAudio: true });
+    await pc.setLocalDescription(offer);
+    await fbPut(pttRoot() + '/offer', { type: offer.type, sdp: offer.sdp });
+  } catch (e) { console.error('caller offer err', e); }
+
+  var aT = setInterval(async function() {
+    if (pc && pc.currentRemoteDescription) { clearInterval(aT); return; }
+    var ans = await fbGet(pttRoot() + '/answer');
+    if (ans && ans.sdp && pc && !pc.currentRemoteDescription) {
+      clearInterval(aT);
+      try { await pc.setRemoteDescription(ans); } catch (e) { console.error('setRemote(answer)', e); }
+    }
+  }, 1000);
+  pttPolls.push(aT);
+  pttWatchCands('calleeCand');
+}
+
+async function pttRunCallee() {
+  pttFlushCands();
+  var oT = setInterval(async function() {
+    if (pc && pc.currentRemoteDescription) { clearInterval(oT); return; }
+    var off = await fbGet(pttRoot() + '/offer');
+    if (off && off.sdp && pc && !pc.currentRemoteDescription) {
+      clearInterval(oT);
+      try {
+        await pc.setRemoteDescription(off);
+        var ans = await pc.createAnswer();
+        await pc.setLocalDescription(ans);
+        await fbPut(pttRoot() + '/answer', { type: ans.type, sdp: ans.sdp });
+      } catch (e) { console.error('callee answer err', e); }
+    }
+  }, 1000);
+  pttPolls.push(oT);
+  pttWatchCands('callerCand');
+}
+
+function pttWatchCands(path) {
+  var cT = setInterval(async function() {
+    if (!pc) { clearInterval(cT); return; }
+    var c = (await fbGet(pttRoot() + '/' + path)) || {};
+    Object.keys(c).forEach(function(k) {
+      if (pttSeen[k]) return;
+      if (pc.remoteDescription) {
+        pttSeen[k] = 1;
+        pc.addIceCandidate(new RTCIceCandidate(c[k])).catch(function(){});
+      }
+    });
+  }, 1000);
+  pttPolls.push(cT);
+}
+
+// ── Connected UI ───────────────────────────────────
+function pttOnJoined() {
   pttResetBtn();
   pttBarSetStatus('Connected', '#1DB954');
-  var cb = document.getElementById('pttBarConnect'); if (cb) { cb.textContent = 'Connected'; cb.classList.add('active'); }
   var pb = document.getElementById('pttBarBtn');     if (pb) pb.classList.add('connected');
   var le = document.getElementById('pttSheetLeave'); if (le) le.style.display = 'block';
   var pe = document.getElementById('pttSheetPeers'); if (pe) pe.style.display = 'block';
@@ -2745,42 +2923,80 @@ function pttRenderPeers() {
   var t = document.getElementById('wtParticipants');   if (t) { t.innerHTML=''; t.appendChild(build()); }
 }
 
+// ── Push-to-talk ───────────────────────────────────
+function pttSetMic(on) {
+  wtMicOn = on;
+  if (localStream) { var tr = localStream.getAudioTracks()[0]; if (tr) tr.enabled = on; }
+}
 function pttBarStart() {
-  if (!pttDailyFrame) { pttBarToggleSheet(); return; }
+  if (!pc) { pttBarToggleSheet(); return; }
   if (wtMicLocked) return;
-  wtMicOn = true;
-  pttDailyFrame.setLocalAudio(true);
+  var el = pttRemote(); if (el && el.paused && el.srcObject) el.play().catch(function(){});  // iOS unlock
+  pttSetMic(true);
   var b = document.getElementById('pttBarBtn'); if (b) b.classList.add('transmitting');
-  document.getElementById('pttBar').classList.add('transmitting');
-  pttBarSetSub('Transmitting...');
+  var bar = document.getElementById('pttBar');  if (bar) bar.classList.add('transmitting');
+  pttBarSetSub('Transmitting…');
   pttBarStartSig();
 }
-
 function pttBarStop() {
   if (wtMicLocked || !wtMicOn) return;
-  wtMicOn = false;
-  if (pttDailyFrame) pttDailyFrame.setLocalAudio(false);
+  pttSetMic(false);
   var b = document.getElementById('pttBarBtn'); if (b) b.classList.remove('transmitting');
-  document.getElementById('pttBar').classList.remove('transmitting');
-  pttBarSetSub(peerConnections['partner'] ? 'Partner connected · Hold mic to talk' : 'Waiting for partner...');
+  var bar = document.getElementById('pttBar');  if (bar) bar.classList.remove('transmitting');
+  pttBarSetSub(peerConnections['partner'] ? 'Partner connected · Hold mic to talk' : 'Waiting for partner…');
   pttBarStopSig();
 }
+function pttBarToggleLock() {
+  if (!pc) { pttBarToggleSheet(); return; }
+  wtMicLocked = !wtMicLocked;
+  var lb  = document.getElementById('pttLockBtn');
+  var blb = document.getElementById('pttBarLockBtn');
+  if (wtMicLocked) {
+    var el = pttRemote(); if (el && el.paused && el.srcObject) el.play().catch(function(){});
+    pttSetMic(true);
+    var b = document.getElementById('pttBarBtn'); if (b) b.classList.add('transmitting');
+    var bar = document.getElementById('pttBar');  if (bar) bar.classList.add('transmitting');
+    pttBarSetSub('Mic locked ON'); pttBarStartSig();
+    if (lb)  { lb.textContent='Tap to Mute'; lb.style.background='#ef4444'; lb.style.color='#fff'; lb.style.borderColor='#ef4444'; }
+    if (blb) { blb.textContent='ON'; blb.style.color='#ef4444'; }
+  } else {
+    pttSetMic(false);
+    var b2 = document.getElementById('pttBarBtn'); if (b2) b2.classList.remove('transmitting');
+    var bar2 = document.getElementById('pttBar');  if (bar2) bar2.classList.remove('transmitting');
+    pttBarSetSub(peerConnections['partner'] ? 'Partner connected · Hold mic to talk' : 'Waiting for partner…');
+    pttBarStopSig();
+    if (lb)  { lb.textContent='Lock Mic On'; lb.style.background='var(--surface2)'; lb.style.color='var(--text)'; lb.style.borderColor='var(--border2)'; }
+    if (blb) { blb.textContent='LOCK'; blb.style.color='var(--muted)'; }
+  }
+}
 
+// ── Leave / cleanup ────────────────────────────────
+async function pttBarLeave() {
+  try {
+    if (pttRoomCode && myId) await fbDel(pttRoot() + '/peers/' + myId);
+    if (pttRoomCode && pttRole === 'caller') { fbDel(pttRoot() + '/offer');  fbDel(pttRoot() + '/callerCand'); }
+    if (pttRoomCode && pttRole === 'callee') { fbDel(pttRoot() + '/answer'); fbDel(pttRoot() + '/calleeCand'); }
+  } catch (e) {}
+  pttCleanup();
+}
 function pttCleanup() {
-  peerConnections = {};
-  pttRoomCode = null;
-  wtMicOn = false;
-  wtMicLocked = false;
-  pttDailyFrame = null;
+  pttPolls.forEach(function(t) { try { clearInterval(t); } catch (e) {} });
+  pttPolls = [];
+  if (pttHeartbeat) { clearInterval(pttHeartbeat); pttHeartbeat = null; }
+  if (pttSafety)    { clearTimeout(pttSafety);     pttSafety = null; }
+  if (pttRemoteRAF) { cancelAnimationFrame(pttRemoteRAF); pttRemoteRAF = null; }
+  if (pc) { try { pc.close(); } catch (e) {} pc = null; }
+  if (localStream) { localStream.getTracks().forEach(function(t){ try{ t.stop(); }catch(e){} }); localStream = null; }
+  var el = pttRemote(); if (el) el.srcObject = null;
+  peerConnections = {}; pttRole = null; myId = null;
+  wtMicOn = false; wtMicLocked = false; pttConnected = false;
   pttBarStopSig();
   pttBarSetStatus('Disconnected', null);
-  pttBarSetSub('Tap Connect to start');
-  var cb = document.getElementById('pttBarConnect'); if (cb) { cb.textContent='Connect'; cb.classList.remove('active'); }
-  var pb = document.getElementById('pttBarBtn');     if (pb) pb.classList.remove('connected','transmitting');
-  document.getElementById('pttBar').classList.remove('transmitting','receiving');
-  var le = document.getElementById('pttSheetLeave'); if (le) le.style.display='none';
-  var pe = document.getElementById('pttSheetPeers'); if (pe) pe.style.display='none';
-  var sh = document.getElementById('pttSheet');      if (sh) sh.classList.remove('open');
+  pttBarSetSub('Tap ⚡ to connect');
+  var pb = document.getElementById('pttBarBtn'); if (pb) pb.classList.remove('connected','transmitting');
+  var bar = document.getElementById('pttBar');   if (bar) bar.classList.remove('transmitting','receiving');
+  var le = document.getElementById('pttSheetLeave'); if (le) le.style.display = 'none';
+  var pe = document.getElementById('pttSheetPeers'); if (pe) pe.style.display = 'none';
   var lb  = document.getElementById('pttLockBtn');
   var blb = document.getElementById('pttBarLockBtn');
   if (lb)  { lb.textContent='Lock Mic On'; lb.style.background='var(--surface2)'; lb.style.color='var(--text)'; lb.style.borderColor='var(--border2)'; }
@@ -2788,38 +3004,7 @@ function pttCleanup() {
   pttResetBtn();
 }
 
-async function pttBarLeave() {
-  if (pttDailyFrame) {
-    try { await pttDailyFrame.leave(); await pttDailyFrame.destroy(); } catch(e){}
-  }
-  pttCleanup();
-}
-
-function pttBarToggleLock() {
-  if (!pttDailyFrame) { pttBarToggleSheet(); return; }
-  wtMicLocked = !wtMicLocked;
-  var lb  = document.getElementById('pttLockBtn');
-  var blb = document.getElementById('pttBarLockBtn');
-  if (wtMicLocked) {
-    wtMicOn = true;
-    if (pttDailyFrame) pttDailyFrame.setLocalAudio(true);
-    var b = document.getElementById('pttBarBtn'); if (b) b.classList.add('transmitting');
-    document.getElementById('pttBar').classList.add('transmitting');
-    pttBarSetSub('Mic locked ON'); pttBarStartSig();
-    if (lb)  { lb.textContent='Tap to Mute'; lb.style.background='#ef4444'; lb.style.color='#fff'; lb.style.borderColor='#ef4444'; }
-    if (blb) { blb.textContent='ON'; blb.style.color='#ef4444'; }
-  } else {
-    wtMicOn = false;
-    if (pttDailyFrame) pttDailyFrame.setLocalAudio(false);
-    var b = document.getElementById('pttBarBtn'); if (b) b.classList.remove('transmitting');
-    document.getElementById('pttBar').classList.remove('transmitting');
-    pttBarSetSub(peerConnections['partner'] ? 'Partner connected · Hold mic to talk' : 'Waiting for partner...');
-    pttBarStopSig();
-    if (lb)  { lb.textContent='Lock Mic On'; lb.style.background='var(--surface2)'; lb.style.color='var(--text)'; lb.style.borderColor='var(--border2)'; }
-    if (blb) { blb.textContent='LOCK'; blb.style.color='var(--muted)'; }
-  }
-}
-
+// ── Signal bars ────────────────────────────────────
 function pttBarStartSig() {
   var bars = document.querySelectorAll('#pttBarSig span');
   var sig  = document.getElementById('pttBarSig'); if (sig) sig.classList.add('active');
@@ -2828,11 +3013,83 @@ function pttBarStartSig() {
     bars.forEach(function(b) { b.style.height = (3 + Math.random() * 15) + 'px'; });
   }, 80);
 }
-
 function pttBarStopSig() {
   if (pttBarSigInterval) { clearInterval(pttBarSigInterval); pttBarSigInterval = null; }
   document.querySelectorAll('#pttBarSig span').forEach(function(b) { b.style.height = '4px'; });
   var sig = document.getElementById('pttBarSig'); if (sig) sig.classList.remove('active');
+}
+
+// ── Remote level meter: light the bar when partner talks ──
+function pttSetupRemoteMeter(stream) {
+  try {
+    if (pttRemoteRAF) { cancelAnimationFrame(pttRemoteRAF); pttRemoteRAF = null; }
+    var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+    var ctx = new AC();
+    var src = ctx.createMediaStreamSource(stream);
+    var an = ctx.createAnalyser(); an.fftSize = 256; src.connect(an);
+    var data = new Uint8Array(an.frequencyBinCount);
+    var bar  = document.getElementById('pttBar');
+    var bars = document.querySelectorAll('#pttBarSig span');
+    function loop() {
+      an.getByteFrequencyData(data);
+      var sum = 0; for (var i = 0; i < data.length; i++) sum += data[i];
+      var avg = sum / data.length;
+      if (!wtMicOn) {                       // don't fight the transmit animation
+        if (avg > 12) {
+          if (bar) bar.classList.add('receiving');
+          bars.forEach(function(b) { b.style.height = (3 + Math.random() * 14) + 'px'; });
+        } else {
+          if (bar) bar.classList.remove('receiving');
+        }
+      }
+      pttRemoteRAF = requestAnimationFrame(loop);
+    }
+    loop();
+  } catch (e) {}
+}
+
+// ── Pre-flight test ────────────────────────────────
+async function pttTestConnection() {
+  var el = document.getElementById('pttTestResult'); if (!el) return;
+  el.style.display = 'block';
+  el.style.background = 'var(--surface2)'; el.style.color = 'var(--muted)';
+  el.textContent = 'Testing…';
+  var lines = [];
+
+  try {
+    var s = await navigator.mediaDevices.getUserMedia({ audio: true });
+    s.getTracks().forEach(function(t){ t.stop(); });
+    lines.push('✓ Microphone OK');
+  } catch (e) { lines.push('✗ Microphone blocked'); }
+
+  try {
+    var r = await fetch(fbPath('/ptt/__test'));
+    lines.push(r.ok ? '✓ Database reachable' : '✗ Database error ' + r.status);
+  } catch (e) { lines.push('✗ Database unreachable — check PTT_DB'); }
+
+  var iceOk = false, relayOk = false;
+  try {
+    await new Promise(function(res) {
+      var t = new RTCPeerConnection({ iceServers: PTT_ICE });
+      t.createDataChannel('x');
+      t.onicecandidate = function(ev) {
+        if (ev.candidate) {
+          iceOk = true;
+          if (ev.candidate.candidate.indexOf('relay') > -1) relayOk = true;
+        } else { try { t.close(); } catch (e) {} res(); }
+      };
+      t.createOffer().then(function(o){ t.setLocalDescription(o); }).catch(function(){ res(); });
+      setTimeout(function(){ try { t.close(); } catch (e) {} res(); }, 4000);
+    });
+  } catch (e) {}
+  lines.push(iceOk ? '✓ Network candidates found' : '✗ No ICE candidates');
+  lines.push(relayOk ? '✓ TURN relay ready (cross-network OK)'
+                     : '• STUN only — same-wifi works; add TURN in PTT_ICE for cross-network');
+
+  var allGood = lines.every(function(l){ return l.charAt(0) !== '✗'; });
+  el.style.background = allGood ? 'rgba(29,185,84,.08)' : 'rgba(239,68,68,.08)';
+  el.style.color = allGood ? '#1DB954' : '#f87171';
+  el.innerHTML = lines.join('<br>');
 }
 
 
@@ -2865,6 +3122,9 @@ function pttBarStopSig() {
 })();
 
 </script>
+
+<!-- partner voice output -->
+<audio id="pttRemoteAudio" autoplay playsinline style="display:none"></audio>
 
 <!-- ═══════ STICKY PTT BAR ═══════ -->
 <div id="pttBar">
