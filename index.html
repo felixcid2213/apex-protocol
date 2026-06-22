@@ -2640,6 +2640,7 @@ var pc = null, localStream = null, pttRemoteEl = null;
 var myId = null, pttRole = null, pttRoomCode = null;
 var pttPolls = [], pttHeartbeat = null, pttSafety = null;
 var pttSeen = {}, pttCandBuf = [], pttCandFlushed = false, pttConnected = false;
+var pttSid = null;   // per-call session id so signaling never collides/deletes
 var wtMicOn = false, wtMicLocked = false, pttBarSigInterval = null;
 var peerConnections = {};           // kept so existing UI checks still work
 var pttRemoteRAF = null;
@@ -2731,7 +2732,7 @@ async function pttBarJoin() {
 
   localStorage.setItem('ap-room-code', code);
   pttRoomCode = code;
-  pttSeen = {}; pttCandBuf = []; pttCandFlushed = false; pttRole = null;
+  pttSeen = {}; pttCandBuf = []; pttCandFlushed = false; pttRole = null; pttSid = null;
   pttConnected = false; peerConnections = {};
 
   setJoinBtn('Joining...', true);
@@ -2766,8 +2767,8 @@ async function pttBarJoin() {
 
   pc.onicecandidate = function(ev) {
     if (!ev.candidate) return;
-    if (!pttRole || !pttCandFlushed) { pttCandBuf.push(ev.candidate); return; }
-    fbPush(pttRoot() + '/' + pttRole + 'Cand', ev.candidate.toJSON());
+    if (!pttRole || !pttSid || !pttCandFlushed) { pttCandBuf.push(ev.candidate); return; }
+    fbPush(pttRoot() + '/cand/' + pttSid + '/' + pttRole, ev.candidate.toJSON());
   };
   pc.ontrack = function(ev) {
     var el = pttRemote();
@@ -2825,64 +2826,66 @@ function pttDecideRole() {
 }
 
 function pttFlushCands() {
-  pttCandBuf.forEach(function(c) { fbPush(pttRoot() + '/' + pttRole + 'Cand', c.toJSON()); });
+  if (!pttSid || !pttRole) return;            // need a session before sending
+  pttCandBuf.forEach(function(c) { fbPush(pttRoot() + '/cand/' + pttSid + '/' + pttRole, c.toJSON()); });
   pttCandBuf = [];
   pttCandFlushed = true;
 }
 
 async function pttRunCaller() {
-  // wipe stale signaling from a prior session before offering
-  await fbDel(pttRoot() + '/answer');
-  await fbDel(pttRoot() + '/callerCand');
-  await fbDel(pttRoot() + '/calleeCand');
-  pttFlushCands();
+  // Fresh session id stamps this whole call. The offer overwrites any stale
+  // offer, and candidates live under /cand/<sid>/ so nothing gets deleted.
+  pttSid = Math.random().toString(36).slice(2, 10);
+  await fbDel(pttRoot() + '/answer');   // clear leftover signaling from prior attempts
+  await fbDel(pttRoot() + '/offer');    // (candidates are under /cand/<sid>, untouched)
   try {
     var offer = await pc.createOffer({ offerToReceiveAudio: true });
     await pc.setLocalDescription(offer);
-    await fbPut(pttRoot() + '/offer', { type: offer.type, sdp: offer.sdp });
+    await fbPut(pttRoot() + '/offer', { type: offer.type, sdp: offer.sdp, sid: pttSid });
   } catch (e) { console.error('caller offer err', e); }
+  pttFlushCands();
+  pttWatchCands('callee');
 
   var aT = setInterval(async function() {
     if (pc && pc.currentRemoteDescription) { clearInterval(aT); return; }
     var ans = await fbGet(pttRoot() + '/answer');
-    if (ans && ans.sdp && pc && !pc.currentRemoteDescription) {
+    if (ans && ans.sdp && ans.sid === pttSid && pc && !pc.currentRemoteDescription) {
       clearInterval(aT);
       try { await pc.setRemoteDescription(ans); } catch (e) { console.error('setRemote(answer)', e); }
     }
   }, 1000);
   pttPolls.push(aT);
-  pttWatchCands('calleeCand');
 }
 
 async function pttRunCallee() {
-  pttFlushCands();
   var oT = setInterval(async function() {
     if (pc && pc.currentRemoteDescription) { clearInterval(oT); return; }
     var off = await fbGet(pttRoot() + '/offer');
-    if (off && off.sdp && pc && !pc.currentRemoteDescription) {
+    if (off && off.sdp && off.sid && pc && !pc.currentRemoteDescription) {
       clearInterval(oT);
+      pttSid = off.sid;                        // adopt caller's session id
       try {
         await pc.setRemoteDescription(off);
         var ans = await pc.createAnswer();
         await pc.setLocalDescription(ans);
-        await fbPut(pttRoot() + '/answer', { type: ans.type, sdp: ans.sdp });
+        await fbPut(pttRoot() + '/answer', { type: ans.type, sdp: ans.sdp, sid: pttSid });
+        pttFlushCands();
+        pttWatchCands('caller');
       } catch (e) { console.error('callee answer err', e); }
     }
   }, 1000);
   pttPolls.push(oT);
-  pttWatchCands('callerCand');
 }
 
-function pttWatchCands(path) {
+function pttWatchCands(otherRole) {
   var cT = setInterval(async function() {
     if (!pc) { clearInterval(cT); return; }
-    var c = (await fbGet(pttRoot() + '/' + path)) || {};
+    if (!pttSid || !pc.remoteDescription) return;   // wait until session + remote desc are ready
+    var c = (await fbGet(pttRoot() + '/cand/' + pttSid + '/' + otherRole)) || {};
     Object.keys(c).forEach(function(k) {
       if (pttSeen[k]) return;
-      if (pc.remoteDescription) {
-        pttSeen[k] = 1;
-        pc.addIceCandidate(new RTCIceCandidate(c[k])).catch(function(){});
-      }
+      pttSeen[k] = 1;
+      pc.addIceCandidate(new RTCIceCandidate(c[k])).catch(function(){});
     });
   }, 1000);
   pttPolls.push(cT);
@@ -2974,8 +2977,9 @@ function pttBarToggleLock() {
 async function pttBarLeave() {
   try {
     if (pttRoomCode && myId) await fbDel(pttRoot() + '/peers/' + myId);
-    if (pttRoomCode && pttRole === 'caller') { fbDel(pttRoot() + '/offer');  fbDel(pttRoot() + '/callerCand'); }
-    if (pttRoomCode && pttRole === 'callee') { fbDel(pttRoot() + '/answer'); fbDel(pttRoot() + '/calleeCand'); }
+    if (pttRoomCode && pttRole === 'caller') fbDel(pttRoot() + '/offer');
+    if (pttRoomCode && pttRole === 'callee') fbDel(pttRoot() + '/answer');
+    if (pttRoomCode && pttSid) fbDel(pttRoot() + '/cand/' + pttSid);
   } catch (e) {}
   pttCleanup();
 }
@@ -2988,7 +2992,7 @@ function pttCleanup() {
   if (pc) { try { pc.close(); } catch (e) {} pc = null; }
   if (localStream) { localStream.getTracks().forEach(function(t){ try{ t.stop(); }catch(e){} }); localStream = null; }
   var el = pttRemote(); if (el) el.srcObject = null;
-  peerConnections = {}; pttRole = null; myId = null;
+  peerConnections = {}; pttRole = null; myId = null; pttSid = null;
   wtMicOn = false; wtMicLocked = false; pttConnected = false;
   pttBarStopSig();
   pttBarSetStatus('Disconnected', null);
